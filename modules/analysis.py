@@ -18,7 +18,7 @@ def pintar_imagen(filename,vmin=None,vmax=None,colormap="coolwarm",colorbar=Fals
 
 def choose_region(filename,origin,shape,vmin=None,vmax=None,colormap="coolwarm",savepath=None,emisivity=1):
   datos=loadcsv(filename)
-  pintar_imagen(filename,vmin,vmax,colormap,False,emisivity)
+  pintar_imagen(filename,vmin,vmax,colormap,False,None,emisivity)
   region=np.zeros_like(datos)
   end=np.array(origin)+np.array(shape)
   region[origin[0]:end[0],origin[1]:end[1]]=1
