@@ -28,7 +28,7 @@ def choose_region(filename,origin,shape,vmin=None,vmax=None,colormap="coolwarm",
     plt.savefig(savepath,dpi=200)
   return region
 
-def plot_T_evolution(prefix,T_list,region,title,tagpos=[80,22],color="black",savepath="",emisivity=1):
+def plot_T_evolution(prefix,T_list,region,title,tagpos=[80,22],color="black",fitting=False,savepath="",emisivity=1):
   Tavg=[]
   Tmax=[]
   for T in T_list:
@@ -39,7 +39,7 @@ def plot_T_evolution(prefix,T_list,region,title,tagpos=[80,22],color="black",sav
   plt.plot(T_list,Tmax,"^",linewidth=3,markersize=8,color="tab:blue",label="T_max")
 
   T_list=np.array(T_list)
-  if withfit:
+  if fitting:
     emisivity_fit=np.polyfit(T_list,Tavg,1)
     plt.plot(T_list,T_list*emisivity_fit[0]+emisivity_fit[1],"--",linewidth=3,color=color)
     plt.text(tagpos[0],tagpos[1],r"$\epsilon = $"+str(np.round(emisivity_fit[0],2)),fontsize=16,color=color)
