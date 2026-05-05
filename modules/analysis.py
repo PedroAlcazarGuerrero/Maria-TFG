@@ -56,4 +56,5 @@ def plot_T_evolution(prefix,T_list,region,title,tagpos=[80,22],color="black",fit
 
   if savepath!="":
     plt.savefig(savepath,dpi=200)
-  return emisivity_fit
+  if fitting:
+    return emisivity_fit
