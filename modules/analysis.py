@@ -28,7 +28,7 @@ def choose_region(filename,origin,shape,vmin=None,vmax=None,colormap="coolwarm",
     plt.savefig(savepath,dpi=200)
   return region
 
-def plot_T_evolution(prefix,T_list,region,title,tagpos=[80,22],color="black",fitting=False,savepath="",emisivity=1):
+def plot_T_evolution(prefix,T_list,region,title,tagpos=[80,22],color="black",fitting=False,color_secundario="tab:blue",savepath="",emisivity=1):
   Tavg=[]
   Tmax=[]
   for T in T_list:
@@ -36,7 +36,7 @@ def plot_T_evolution(prefix,T_list,region,title,tagpos=[80,22],color="black",fit
     Tavg.append(np.average(data[region]))
     Tmax.append(np.max(data[region]))
   plt.plot(T_list,Tavg,"o",linewidth=3,markersize=8,color=color,label="T_avg")
-  plt.plot(T_list,Tmax,"^",linewidth=3,markersize=8,color=color,label="T_max")
+  plt.plot(T_list,Tmax,"^",linewidth=3,markersize=8,color=color_secundario,label="T_max")
 
   T_list=np.array(T_list)
   if fitting:
