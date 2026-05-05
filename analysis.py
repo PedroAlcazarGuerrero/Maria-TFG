@@ -8,6 +8,8 @@ def hello():
 def loadcsv(ifile):
   return pd.read_csv(ifile,header=None,sep=";").replace(",",".",regex=True).to_numpy().astype("float")
 
-def pintar_imagen(filename,vmin=None,vmax=None,colormap="coolwarm"):
+def pintar_imagen(filename,vmin=None,vmax=None,colormap="coolwarm",colorbar=False):
   plt.imshow(loadcsv(filename),cmap=colormap,vmin=vmin,vmax=vmax)
+  if colorbar:
+    plt.colorbar()
     
