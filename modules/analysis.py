@@ -28,7 +28,7 @@ def choose_region(filename,origin,shape,vmin=None,vmax=None,colormap="coolwarm",
     plt.savefig(savepath,dpi=200)
   return region
 
-def plot_T_evolution(prefix,T_list,region,title,tagpos=[80,22],color="black",fitting=False,color_secundario="tab:blue",savepath="",emisivity=1):
+def plot_T_evolution(prefix,T_list,region,title,tagpos=[80,22],color="black",fitting=False,color_secundario="tab:blue",savepath=None,emisivity=1):
   Tavg=[]
   Tmax=[]
   for T in T_list:
@@ -54,7 +54,7 @@ def plot_T_evolution(prefix,T_list,region,title,tagpos=[80,22],color="black",fit
   for spine in plt.gca().spines.values():
       spine.set_linewidth(2)
 
-  if savepath!="":
+  if savepath is not None:
     plt.savefig(savepath,dpi=200)
   if fitting:
     return emisivity_fit
