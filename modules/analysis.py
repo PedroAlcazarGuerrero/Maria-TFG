@@ -33,8 +33,8 @@ def plot_T_evolution(prefix,T_list,title,tagpos=[80,22],color="black",savepath="
   Tmax=[]
   for T in T_list:
     data=loadcsv(prefix+str(T)+".csv")*emisivity
-    Tavg.append(np.average(data[region_carbono]))
-    Tmax.append(np.max(data[region_carbono]))
+    Tavg.append(np.average(data[region]))
+    Tmax.append(np.max(data[region]))
   plt.plot(T_list,Tavg,"o",linewidth=3,markersize=8,color="tab:orange",label="T_avg")
   plt.plot(T_list,Tmax,"^",linewidth=3,markersize=8,color="tab:blue",label="T_max")
 
