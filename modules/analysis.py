@@ -8,15 +8,15 @@ def hello():
 def loadcsv(ifile):
   return pd.read_csv(ifile,header=None,sep=";").replace(",",".",regex=True).to_numpy().astype("float")
 
-def pintar_imagen(filename,vmin=None,vmax=None,colormap="coolwarm",colorbar=False,savepath="",emisivity=1):
+def pintar_imagen(filename,vmin=None,vmax=None,colormap="coolwarm",colorbar=False,savepath=None,emisivity=1):
   plt.imshow(loadcsv(filename)*emisivity,cmap=colormap,vmin=vmin,vmax=vmax)
   if colorbar:
     plt.colorbar()
-  if savepath != "":
+  if savepath is not None:
     plt.savefig(savepath,dpi=200)
 
 
-def choose_region(filename,origin,shape,vmin=None,vmax=None,colormap="coolwarm",savepath="",emisivity=1):
+def choose_region(filename,origin,shape,vmin=None,vmax=None,colormap="coolwarm",savepath=None,emisivity=1):
   datos=loadcsv(filename)
   pintar_imagen(filename,vmin,vmax,colormap,False,emisivity)
   region=np.zeros_like(datos)
@@ -24,7 +24,7 @@ def choose_region(filename,origin,shape,vmin=None,vmax=None,colormap="coolwarm",
   region[origin[0]:end[0],origin[1]:end[1]]=1
   region=region.astype(bool)
   plt.imshow(region,alpha=.2,cmap="binary")
-  if savepath != "":
+  if savepath is not None:
     plt.savefig(savepath,dpi=200)
   return region
 
