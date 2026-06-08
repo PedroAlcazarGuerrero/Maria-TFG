@@ -28,10 +28,19 @@ def choose_region(filename,origin,shape,vmin=None,vmax=None,colormap="coolwarm",
     plt.savefig(savepath,dpi=200)
   return region
 
-def plot_T_evolution(prefix,T_list,region,title,tagpos=[80,22],color="black",fitting=False,color_secundario="tab:blue",savepath=None,emisivity=1):
+def extract_region_from_db(name,db):
+  pass
+
+def plot_T_evolution(prefix,T_list,region,title,tagpos=[80,22],color="black",fitting=False,color_secundario="tab:blue",savepath=None,emisivity=1,default_db="MARIA-TFG/datos/Base_de_datos_regiones.csv"):
   Tavg=[]
   Tmax=[]
+  dbsing=False
+  if region is None:
+    dbsing=True
+    db=pd.loadcsv(default_db)
   for T in T_list:
+    if region is None:
+      region=extract_region_from_db(prefix+str(T),db)
     data=loadcsv(prefix+str(T)+".csv")*emisivity
     Tavg.append(np.average(data[region]))
     Tmax.append(np.max(data[region]))
