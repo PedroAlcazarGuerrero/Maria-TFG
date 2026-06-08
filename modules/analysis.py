@@ -28,13 +28,16 @@ def choose_region(filename,origin,shape,vmin=None,vmax=None,colormap="coolwarm",
     plt.savefig(savepath,dpi=200)
   return region
 
-def extract_region_from_db(name,db):
+  
+def extract_region_from_db(data,name,db):
   this_entry=db.loc[name]
-  x_min=name["x_min"]
-  x_max=name["x_max"]
-  y_min=name["y_min"]
-  y_max=name["y_max"]
-  return[x_min:x_max,y_min,y_max]
+  region=np.zeros_like(data)
+  x_min=this_entry["x_min"]
+  x_max=this_entry["x_max"]
+  y_min=this_entry["y_min"]
+  y_max=this_entry["y_max"]
+  region[x_min:x_max,y_min:y_max]=1
+  return region
 
 def plot_T_evolution(prefix,T_list,region,title,tagpos=[80,22],color="black",fitting=False,color_secundario="tab:blue",savepath=None,emisivity=1,default_db="MARIA-TFG/datos/Base_de_datos_regiones.csv"):
   Tavg=[]
@@ -44,9 +47,9 @@ def plot_T_evolution(prefix,T_list,region,title,tagpos=[80,22],color="black",fit
     dbsing=True
     db=pd.loadcsv(default_db,sep=";",index_col="name")
   for T in T_list:
-    if region is None:
-      region=extract_region_from_db(prefix+str(T),db)
     data=loadcsv(prefix+str(T)+".csv")*emisivity
+    if region is None:
+      region=extract_region_from_db(data,prefix+str(T),db)
     Tavg.append(np.average(data[region]))
     Tmax.append(np.max(data[region]))
   plt.plot(T_list,Tavg,"o",linewidth=3,markersize=8,color=color,label="T_avg")
