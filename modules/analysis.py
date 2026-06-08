@@ -29,7 +29,12 @@ def choose_region(filename,origin,shape,vmin=None,vmax=None,colormap="coolwarm",
   return region
 
 def extract_region_from_db(name,db):
-  pass
+  this_entry=db.loc[name]
+  x_min=name["x_min"]
+  x_max=name["x_max"]
+  y_min=name["y_min"]
+  y_max=name["y_max"]
+  return[x_min:x_max,y_min,y_max]
 
 def plot_T_evolution(prefix,T_list,region,title,tagpos=[80,22],color="black",fitting=False,color_secundario="tab:blue",savepath=None,emisivity=1,default_db="MARIA-TFG/datos/Base_de_datos_regiones.csv"):
   Tavg=[]
@@ -37,7 +42,7 @@ def plot_T_evolution(prefix,T_list,region,title,tagpos=[80,22],color="black",fit
   dbsing=False
   if region is None:
     dbsing=True
-    db=pd.loadcsv(default_db)
+    db=pd.loadcsv(default_db,sep=";",index_col="name")
   for T in T_list:
     if region is None:
       region=extract_region_from_db(prefix+str(T),db)
