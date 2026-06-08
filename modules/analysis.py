@@ -28,14 +28,14 @@ def choose_region(filename,origin,shape,vmin=None,vmax=None,colormap="coolwarm",
     plt.savefig(savepath,dpi=200)
   return region
 
-  
+
 def extract_region_from_db(data,name,db):
   this_entry=db.loc[name]
-  region=np.zeros_like(data)
-  x_min=this_entry["x_min"]
-  x_max=this_entry["x_max"]
-  y_min=this_entry["y_min"]
-  y_max=this_entry["y_max"]
+  region=np.zeros_like(data,dtype=float)
+  x_min=int(this_entry["x_min"])
+  x_max=int(this_entry["x_max"])
+  y_min=int(this_entry["y_min"])
+  y_max=int(this_entry["y_max"])
   region[x_min:x_max,y_min:y_max]=1
   return region
 
