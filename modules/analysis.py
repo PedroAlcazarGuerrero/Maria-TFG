@@ -51,6 +51,7 @@ def plot_T_evolution(prefix,T_list,region,title,tagpos=[80,22],color="black",fit
     if dbsing:
       region=extract_region_from_db(data,prefix+str(T),db)
     if verbose:
+      plt.title("Region for T = " + T +"ºC")
       plt.imshow(data,cmap="coolwarm")
       plt.imshow(region,cmap="binary",alpha=.3)
       plt.show()
