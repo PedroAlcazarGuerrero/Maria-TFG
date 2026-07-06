@@ -39,7 +39,7 @@ def extract_region_from_db(data,name,db):
   region[x_min:x_max,y_min:y_max]=1
   return region.astype(bool)
 
-def plot_T_evolution(prefix,T_list,region,title,tagpos=[80,22],color="black",fitting=False,color_secundario="tab:blue",savepath=None,emisivity=1,default_db="/content/Maria-TFG/datos/Estufa/Base_de_datos_regiones.csv"):
+def plot_T_evolution(prefix,T_list,region,title,tagpos=[80,22],color="black",fitting=False,color_secundario="tab:blue",savepath=None,emisivity=1,default_db="/content/Maria-TFG/datos/Estufa/Base_de_datos_regiones.csv",verbose=True):
   Tavg=[]
   Tmax=[]
   dbsing=False
@@ -48,8 +48,12 @@ def plot_T_evolution(prefix,T_list,region,title,tagpos=[80,22],color="black",fit
     db=pd.read_csv(default_db,sep=";",index_col="name")
   for T in T_list:
     data=loadcsv(prefix+str(T)+".csv")*emisivity
-    if region is None:
+    if dbsing:
       region=extract_region_from_db(data,prefix+str(T),db)
+    if verbose:
+      plt.imshow(data,cmap="coolwarm")
+      plt.imshow(region,cmap="binary",alpha=.3)
+      plt.show()
     Tavg.append(np.average(data[region]))
     Tmax.append(np.max(data[region]))
   plt.plot(T_list,Tavg,"o",linewidth=3,markersize=8,color=color,label="T_avg")
